@@ -88,6 +88,7 @@ static inline void __list_add(struct list_head *new,
  *
  * Insert a new entry after the specified head.
  * This is good for implementing stacks.
+ * 在head前插入一个new
  */
 static inline void list_add(struct list_head *new, struct list_head *head)
 {
@@ -102,6 +103,7 @@ static inline void list_add(struct list_head *new, struct list_head *head)
  *
  * Insert a new entry before the specified head.
  * This is useful for implementing queues.
+ * 在head后插入一个new
  */
 static inline void list_add_tail(struct list_head *new, struct list_head *head)
 {
@@ -532,8 +534,11 @@ static inline void list_splice_tail_init(struct list_head *list,
  * @type:	the type of the struct this is embedded in.
  * @member:	the name of the list_head within the struct.
  */
+//#define list_entry(ptr, type, member) \
+	// container_of(ptr, type, member)
+
 #define list_entry(ptr, type, member) \
-	container_of(ptr, type, member)
+    ((type *) ((char *) (ptr) - offsetof(type, member)))
 
 /**
  * list_first_entry - get the first element from a list
